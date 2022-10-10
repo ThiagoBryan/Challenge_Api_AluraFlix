@@ -1,5 +1,6 @@
 package videos;
 
+import br.com.aluraFlix.domain.Videos;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -8,5 +9,7 @@ import org.springframework.stereotype.Service;
 public class VideosService {
 
     private final VideosRepository videosRepository;
-    
+
+
+
 }
