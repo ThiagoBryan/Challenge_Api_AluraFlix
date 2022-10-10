@@ -2,9 +2,13 @@ package videos;
 
 
 import br.com.aluraFlix.domain.Videos;
-import org.springframework.data.repository.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface VideosRepository extends Repository<Videos, Long> {
+import java.util.Optional;
+
+public interface VideosRepository extends JpaRepository<Videos, Long> {
+
+    Optional<Videos> findByUrl(String url);
 
 
 }

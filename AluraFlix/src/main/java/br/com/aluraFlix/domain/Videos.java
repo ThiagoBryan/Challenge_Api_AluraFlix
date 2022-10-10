@@ -25,6 +25,11 @@ public class Videos {
     public Videos(){
     }
 
+    public Videos(String titulo, String descricao, String url) {
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.url = url;
+    }
 
     public Long getId() {
         return id;
