@@ -1,4 +1,4 @@
-package br.com.aluraFlix.AluraFlix.aluraFlix.domain;
+package br.com.aluraFlix.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
