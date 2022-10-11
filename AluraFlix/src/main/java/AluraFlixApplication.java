@@ -1,5 +1,3 @@
-package br.com.aluraFlix.aluraFlix;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

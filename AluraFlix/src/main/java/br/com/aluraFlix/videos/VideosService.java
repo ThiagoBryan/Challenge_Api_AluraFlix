@@ -1,7 +1,7 @@
-package videos;
+package br.com.aluraFlix.videos;
 
 import br.com.aluraFlix.domain.Videos;
-import exception.VideosException;
+import br.com.aluraFlix.exception.VideosException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

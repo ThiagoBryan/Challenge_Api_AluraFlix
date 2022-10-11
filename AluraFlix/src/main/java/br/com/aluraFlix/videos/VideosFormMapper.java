@@ -1,7 +1,7 @@
-package videos;
+package br.com.aluraFlix.videos;
 
 import br.com.aluraFlix.domain.Videos;
-import infra.Mapper;
+import br.com.aluraFlix.infra.Mapper;
 import org.springframework.stereotype.Component;
 
 

@@ -1,4 +1,4 @@
-package videos;
+package br.com.aluraFlix.videos;
 
 
 import br.com.aluraFlix.domain.Videos;
