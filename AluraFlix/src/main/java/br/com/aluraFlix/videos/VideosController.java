@@ -13,7 +13,7 @@ public class VideosController {
     @Autowired
     private VideosService videosService;
 
-    @PostMapping("/salvar")
+    @PostMapping
     public ResponseEntity<String> save(@RequestBody VideosForm videosForm) {
         return new ResponseEntity<String>(videosService.salvarVideo(videosForm), HttpStatus.CREATED);
     }

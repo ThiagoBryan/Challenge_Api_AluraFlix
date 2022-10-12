@@ -1,5 +1,7 @@
 package br.com.aluraFlix.videos;
 
+import br.com.aluraFlix.domain.Videos;
+
 import javax.validation.constraints.NotBlank;
 
 public class VideosForm {
@@ -37,4 +39,5 @@ public class VideosForm {
     public void setUrl(String url) {
         this.url = url;
     }
+
 }

@@ -5,7 +5,9 @@ import br.com.aluraFlix.exception.VideosException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -13,23 +15,25 @@ import static java.util.stream.Collectors.toList;
 public class VideosService {
     @Autowired
     private  VideosRepository videosRepository;
-    @Autowired
-    private  VideosFormMapper videosFormMapper;
-    @Autowired
-    private VideosViewMapper videosViewMapper;
 
-    public String salvarVideo(VideosForm form) {
-        videosRepository.findByUrl(form.getUrl()).ifPresent(videos -> {
+    public String salvarVideo(VideosForm videosForm) {
+        videosRepository.findByUrl(videosForm.getUrl()).ifPresent(videos -> {
             throw new VideosException("Video já existe");
         });
 
-        Videos salvarVideos = videosFormMapper.map(form);
-        videosRepository.save(salvarVideos);
-        return "Video criado com Id: " + salvarVideos.getId();
+        Videos videos = new Videos();
+        videosRepository.save(videos.converter(videosForm));
+        return "Video salvo com sucesso.";
     }
 
     public List<VideosView> todosVideos() {
-        return videosRepository.findAll().stream().map(videosViewMapper::map).collect(toList());
+        List<Videos> videos = videosRepository.findAll(); // do banco
+        List<VideosView> videosViews = new ArrayList<>(); // lista vazia para popular
+            videos.forEach(video->{ // for each do q esta vindo do banco
+                VideosView view = new VideosView(); // cada video transforma em um objeto view
+                videosViews.add(view.converter(video));//  chama o metodo para converter e adiciona o que converteu
+            });
+            return videosViews;
     }
 
 

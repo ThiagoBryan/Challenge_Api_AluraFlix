@@ -1,5 +1,7 @@
 package br.com.aluraFlix.domain;
 
+import br.com.aluraFlix.videos.VideosForm;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -59,5 +61,9 @@ public class Videos {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Videos converter(VideosForm videosForm) {
+        return new Videos(videosForm.getTitulo(), videosForm.getDescricao(), videosForm.getUrl());
     }
 }
