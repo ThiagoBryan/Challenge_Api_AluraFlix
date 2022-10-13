@@ -24,6 +24,11 @@ public class VideosController {
         return ResponseEntity.ok(videosService.todosVideos());
     }
 
+    @GetMapping("/{id}")
+        public ResponseEntity<VideosView> mostrarVideoId(@PathVariable Long id){
+        return ResponseEntity.ok(videosService.mostrarVideoId(id));
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<String> atualizar(@PathVariable Long id, @Valid @RequestBody VideosForm videosForm){
         return ResponseEntity.ok(videosService.atualizar(id, videosForm));

@@ -15,7 +15,5 @@ public class VideosView {
     private String descricao;
     private String url;
 
-    public VideosView converter(Videos videos) {
-        return new VideosView(videos.getId(), videos.getTitulo(), videos.getDescricao(), videos.getUrl());
-    }
+
 }

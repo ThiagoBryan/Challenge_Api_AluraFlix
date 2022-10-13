@@ -63,7 +63,9 @@ public class Videos {
         this.url = url;
     }
 
-    public Videos converter(VideosForm videosForm) {
-        return new Videos(videosForm.getTitulo(), videosForm.getDescricao(), videosForm.getUrl());
+    public Videos atualizarVideo(Videos video, VideosForm videosForm){
+        video.setTitulo(videosForm.getTitulo());
+        video.setDescricao(videosForm.getDescricao());
+        return video;
     }
 }
