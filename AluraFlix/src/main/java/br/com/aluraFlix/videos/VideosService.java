@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
@@ -34,6 +35,18 @@ public class VideosService {
                 videosViews.add(view.converter(video));//  chama o metodo para converter e adiciona o que converteu
             });
             return videosViews;
+    }
+
+    public String atualizar(Long IdVideos, VideosForm videosForm) {
+        Optional<Videos> videos = videosRepository.findById(IdVideos);
+        if (videos.isPresent()) {
+            Videos atualizarVideos = videos.get();
+            atualizarVideos.setTitulo(videosForm.getTitulo());
+            atualizarVideos.setDescricao(videosForm.getDescricao());
+            videosRepository.save(atualizarVideos);
+        }
+        return "O Vídeo com ID " + videos.get().getId() + " foi atualizado";
+
     }
 
 
