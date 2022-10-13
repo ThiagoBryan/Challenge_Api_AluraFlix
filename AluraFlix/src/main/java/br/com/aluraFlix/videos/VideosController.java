@@ -34,4 +34,11 @@ public class VideosController {
         return ResponseEntity.ok(videosService.atualizar(id, videosForm));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id){
+        videosService.deletar(id);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+
 }

@@ -49,5 +49,12 @@ public class VideosService {
 
     }
 
+    public void deletar(Long videoId) {
+        videosRepository.deleteById(videoId);
+
+    }
+
+
+
 
 }
