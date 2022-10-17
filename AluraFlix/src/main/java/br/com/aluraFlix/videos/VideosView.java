@@ -1,11 +1,11 @@
 package br.com.aluraFlix.videos;
 
+import br.com.aluraFlix.domain.Categorias;
 import br.com.aluraFlix.domain.Videos;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class VideosView {
@@ -14,6 +14,8 @@ public class VideosView {
     private String titulo;
     private String descricao;
     private String url;
+    private Categorias categoria;
+
 
 
 }

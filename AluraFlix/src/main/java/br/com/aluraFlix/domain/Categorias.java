@@ -1,13 +1,12 @@
 package br.com.aluraFlix.domain;
 
 import br.com.aluraFlix.categorias.CategoriasForm;
-import br.com.aluraFlix.videos.VideosForm;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Entity
 public class Categorias {
@@ -19,6 +18,25 @@ public class Categorias {
     private String titulo;
     @NotBlank
     private String cor;
+
+    @OneToMany(mappedBy = "categoria")
+    @JsonIgnore
+    private List<Videos> videos;
+
+    public Categorias(Long id, String titulo, String cor, List<Videos> videos) {
+        this.id = id;
+        this.titulo = titulo;
+        this.cor = cor;
+        this.videos = videos;
+    }
+
+    public List<Videos> getVideos() {
+        return videos;
+    }
+
+    public void setVideos(List<Videos> videos) {
+        this.videos = videos;
+    }
 
     public Categorias() {
     }
@@ -40,8 +58,8 @@ public class Categorias {
         return titulo;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+    public void setTitulo(String tipo) {
+        this.titulo = tipo;
     }
 
     public String getCor() {

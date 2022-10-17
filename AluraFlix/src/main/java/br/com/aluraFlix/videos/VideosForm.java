@@ -1,9 +1,11 @@
 package br.com.aluraFlix.videos;
 
+import br.com.aluraFlix.domain.Categorias;
 import br.com.aluraFlix.domain.Videos;
+import lombok.AllArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-
+@AllArgsConstructor
 public class VideosForm {
 
     @NotBlank
@@ -12,8 +14,15 @@ public class VideosForm {
     private String descricao;
     @NotBlank
     private String url;
+    @NotBlank
+    private Categorias categoria;
 
-    public void VideosForm(){
+    public Categorias getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categorias categoria) {
+        this.categoria = categoria;
     }
 
     public String getTitulo() {

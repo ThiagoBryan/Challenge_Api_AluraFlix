@@ -1,34 +1,43 @@
 package br.com.aluraFlix.domain;
 
 import br.com.aluraFlix.videos.VideosForm;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
+@NoArgsConstructor
 public class Videos {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-   @NotBlank
+    @NotBlank
     private String titulo;
     @NotBlank
     private String descricao;
     @NotBlank
     private String url;
 
-    public Videos(){
-    }
+    @ManyToOne
+    private Categorias categoria;
 
-    public Videos(String titulo, String descricao, String url) {
+    public Videos(String titulo, String descricao, String url, Categorias categoria) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.url = url;
+        this.categoria = categoria;
+    }
+
+    public Categorias getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categorias categoria) {
+        this.categoria = categoria;
     }
 
     public Long getId() {
@@ -63,7 +72,7 @@ public class Videos {
         this.url = url;
     }
 
-    public Videos atualizarVideo(Videos video, VideosForm videosForm){
+    public Videos atualizarVideo(Videos video, VideosForm videosForm) {
         video.setTitulo(videosForm.getTitulo());
         video.setDescricao(videosForm.getDescricao());
         return video;
