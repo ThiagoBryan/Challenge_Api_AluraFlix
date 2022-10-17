@@ -1,5 +1,8 @@
 package br.com.aluraFlix.domain;
 
+import br.com.aluraFlix.categorias.CategoriasForm;
+import br.com.aluraFlix.videos.VideosForm;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -48,4 +51,11 @@ public class Categorias {
     public void setCor(String cor) {
         this.cor = cor;
     }
+
+    public Categorias atualizarCategoria(Categorias categoria, CategoriasForm categoriasForm){
+        categoria.setTitulo(categoriasForm.getTitulo());
+        categoria.setCor(categoriasForm.getCor());
+        return categoria;
+    }
+
 }

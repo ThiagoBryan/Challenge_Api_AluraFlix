@@ -1,8 +1,11 @@
 package br.com.aluraFlix.categorias;
 
 import br.com.aluraFlix.domain.Categorias;
+import br.com.aluraFlix.domain.Videos;
 import br.com.aluraFlix.exception.CategoriaException;
+import br.com.aluraFlix.exception.VideosException;
 import br.com.aluraFlix.mapper.MapperCategorias;
+import br.com.aluraFlix.videos.VideosForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +43,12 @@ public class CategoriasService {
         return mapperCategorias.converterCategorias(categoria);
     }
 
+    public String atualizar(Long categoriaId, CategoriasForm categoriasForm){
+        Categorias categoria = categoriasRepository.findById(categoriaId).orElseThrow(() -> new CategoriaException("Categoria não encontarda"));
+        categoriasRepository.save(categoria.atualizarCategoria(categoria,categoriasForm));
+
+        return "A categoria com ID " + categoria.getId() + " foi atualizada";
+    }
 
 
 
