@@ -20,8 +20,7 @@ public class Categorias {
     public Categorias() {
     }
 
-    public Categorias(Long id, String titulo, String cor) {
-        this.id = id;
+    public Categorias(String titulo, String cor) {
         this.titulo = titulo;
         this.cor = cor;
     }
