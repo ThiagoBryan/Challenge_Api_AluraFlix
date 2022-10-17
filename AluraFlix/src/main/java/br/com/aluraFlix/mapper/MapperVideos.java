@@ -6,13 +6,13 @@ import br.com.aluraFlix.videos.VideosView;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Mapper {
+public class MapperVideos {
 
-    public VideosView converter(Videos videos) {
+    public VideosView converterVideos(Videos videos) {
         return new VideosView(videos.getId(), videos.getTitulo(), videos.getDescricao(), videos.getUrl());
     }
 
-    public Videos converter(VideosForm videosForm) {
+    public Videos converterVideos(VideosForm videosForm) {
         return new Videos(videosForm.getTitulo(), videosForm.getDescricao(), videosForm.getUrl());
     }
 }

@@ -2,7 +2,7 @@ package br.com.aluraFlix.videos;
 
 import br.com.aluraFlix.domain.Videos;
 import br.com.aluraFlix.exception.VideosException;
-import br.com.aluraFlix.mapper.Mapper;
+import br.com.aluraFlix.mapper.MapperVideos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ public class VideosService {
     private VideosRepository videosRepository;
 
     @Autowired
-    private Mapper mapper;
+    private MapperVideos mapper;
 
     public String salvarVideo(VideosForm videosForm) {
         videosRepository.findByUrl(videosForm.getUrl()).ifPresent(videos -> {
@@ -23,7 +23,7 @@ public class VideosService {
         });
 
         //Videos videos = new Videos();
-        videosRepository.save(mapper.converter(videosForm));
+        videosRepository.save(mapper.converterVideos(videosForm));
         return "Video salvo com sucesso.";
     }
 
@@ -31,14 +31,14 @@ public class VideosService {
         List<Videos> videos = videosRepository.findAll(); // do banco
         List<VideosView> videosViews = new ArrayList<>(); // lista vazia para popular
         videos.forEach(video -> { // for each do q esta vindo do banco
-            videosViews.add(mapper.converter(video));//  chama o metodo para converter e adiciona o que converteu
+            videosViews.add(mapper.converterVideos(video));//  chama o metodo para converter e adiciona o que converteu
         });
         return videosViews;
     }
 
     public VideosView mostrarVideoId(Long videoId) {
         Videos video = videosRepository.findById(videoId).orElseThrow(() -> new VideosException("Video não encontrado"));
-        return mapper.converter(video);
+        return mapper.converterVideos(video);
     }
 
     public String atualizar(Long IdVideos, VideosForm videosForm) {
