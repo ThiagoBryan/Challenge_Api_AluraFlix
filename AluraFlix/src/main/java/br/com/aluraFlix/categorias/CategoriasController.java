@@ -1,8 +1,6 @@
 package br.com.aluraFlix.categorias;
 
 import br.com.aluraFlix.exception.CategoriaException;
-import br.com.aluraFlix.videos.VideosForm;
-import br.com.aluraFlix.videos.VideosView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +34,12 @@ public class CategoriasController {
     @PutMapping("{id}")
     public ResponseEntity<String> atualizarCategoria(@PathVariable Long id,  @Valid @RequestBody CategoriasForm categoriasForm) throws CategoriaException{
         return ResponseEntity.ok(categoriasService.atualizar(id, categoriasForm));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id){
+        categoriasService.deletar(id);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
 }
