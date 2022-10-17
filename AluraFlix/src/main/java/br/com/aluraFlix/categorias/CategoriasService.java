@@ -26,7 +26,14 @@ public class CategoriasService {
         return "Categoria salva com sucesso";
     }
 
-   
+    public List<CategoriasView> todasCategorias(){
+        List<Categorias> categorias = categoriasRepository.findAll();
+        List<CategoriasView> categoriasView = new ArrayList<>();
+        categorias.forEach(categoria -> {
+            categoriasView.add(mapperCategorias.converterCategorias(categoria));
+        });
+        return categoriasView;
+    }
 
 
 }
