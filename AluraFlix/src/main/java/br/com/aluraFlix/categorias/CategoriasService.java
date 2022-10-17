@@ -35,5 +35,12 @@ public class CategoriasService {
         return categoriasView;
     }
 
+    public CategoriasView mostrarCategoriaId(Long categoriaID){
+       Categorias categoria = categoriasRepository.findById(categoriaID).orElseThrow(()-> new CategoriaException("Categoria não encontrada"));
+        return mapperCategorias.converterCategorias(categoria);
+    }
+
+
+
 
 }
