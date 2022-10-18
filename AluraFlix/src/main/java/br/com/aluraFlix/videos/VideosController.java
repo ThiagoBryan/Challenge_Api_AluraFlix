@@ -20,7 +20,7 @@ public class VideosController {
     }
 
     @GetMapping
-    public ResponseEntity<List<VideosView>> listarTodos(){
+    public ResponseEntity<List<VideosProjection>> listarTodos(){
         return ResponseEntity.ok(videosService.todosVideos());
     }
 

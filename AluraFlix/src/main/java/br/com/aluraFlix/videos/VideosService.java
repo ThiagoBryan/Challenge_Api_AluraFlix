@@ -28,13 +28,8 @@ public class VideosService {
         return "Video salvo com sucesso.";
     }
 
-    public List<VideosView> todosVideos() {
-        List<Videos> videos = videosRepository.findAll(); // do banco
-        List<VideosView> videosViews = new ArrayList<>(); // lista vazia para popular
-        videos.forEach(video -> { // for each do q esta vindo do banco
-            videosViews.add(mapper.converterVideos(video));//  chama o metodo para converter e adiciona o que converteu
-        });
-        return videosViews;
+    public List<VideosProjection> todosVideos() {
+        return videosRepository.findAllVideos();
     }
 
     public VideosView mostrarVideoId(Long videoId) {
