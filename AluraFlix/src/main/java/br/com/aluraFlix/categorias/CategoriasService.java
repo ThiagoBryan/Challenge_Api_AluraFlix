@@ -3,6 +3,7 @@ package br.com.aluraFlix.categorias;
 import br.com.aluraFlix.domain.Categorias;
 import br.com.aluraFlix.exception.CategoriaException;
 import br.com.aluraFlix.mapper.MapperCategorias;
+import br.com.aluraFlix.videos.VideosView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +39,10 @@ public class CategoriasService {
     public CategoriasView mostrarCategoriaId(Long categoriaID){
        Categorias categoria = categoriasRepository.findById(categoriaID).orElseThrow(()-> new CategoriaException("Categoria não encontrada"));
         return mapperCategorias.converterCategorias(categoria);
+    }
+
+    public List<VideosView> mostrarVideosPorCategoria(Long videoId){
+        return categoriasRepository.findVideosCategoria();
     }
 
     public String atualizar(Long categoriaId, CategoriasForm categoriasForm){

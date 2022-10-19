@@ -16,5 +16,4 @@ public interface VideosRepository extends JpaRepository<Videos, Long> {
     @Query(value = "SELECT v.id, v.titulo, v.descricao, v.url, v.categoria_id as categoria FROM videos v", nativeQuery = true)
     List<VideosProjection> findAllVideos();
 
-
 }
