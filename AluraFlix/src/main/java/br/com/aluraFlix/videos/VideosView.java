@@ -1,8 +1,10 @@
 package br.com.aluraFlix.videos;
 
 import br.com.aluraFlix.domain.Categorias;
-import br.com.aluraFlix.domain.Videos;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Setter
 @Getter

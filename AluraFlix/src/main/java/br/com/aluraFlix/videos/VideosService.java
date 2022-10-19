@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VideosService {
@@ -28,13 +29,17 @@ public class VideosService {
         return "Video salvo com sucesso.";
     }
 
-    public List<VideosProjection> todosVideos() {
+    public List<VideosView> todosVideos() {
         return videosRepository.findAllVideos();
     }
 
     public VideosView mostrarVideoId(Long videoId) {
         Videos video = videosRepository.findById(videoId).orElseThrow(() -> new VideosException("Video não encontrado"));
         return mapper.converterVideos(video);
+    }
+
+    public Optional<VideosView> mostrarVideoPorTitulo(String titulo){
+        return videosRepository.findByTitulo(titulo);
     }
 
     public String atualizar(Long IdVideos, VideosForm videosForm) {

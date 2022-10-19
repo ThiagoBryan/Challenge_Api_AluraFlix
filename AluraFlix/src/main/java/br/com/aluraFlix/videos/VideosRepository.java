@@ -13,7 +13,16 @@ public interface VideosRepository extends JpaRepository<Videos, Long> {
 
     Optional<Videos> findByUrl(String url);
 
-    @Query(value = "SELECT v.id, v.titulo, v.descricao, v.url, v.categoria_id as categoria FROM videos v", nativeQuery = true)
-    List<VideosProjection> findAllVideos();
+    @Query(value = "SELECT " +
+                    "new br.com.aluraFlix.videos.VideosView(v.id, v.titulo, v.descricao, v.url, v.categoria)" +
+                "FROM Videos v")
+    List<VideosView> findAllVideos();
+
+    @Query(value = "SELECT " +
+            "new br.com.aluraFlix.videos.VideosView(v.id, v.titulo, v.descricao, v.url, v.categoria)" +
+            "FROM Videos v " +
+            "WHERE v.titulo = :titulo")
+    Optional<VideosView> findByTitulo(String titulo);
+
 
 }

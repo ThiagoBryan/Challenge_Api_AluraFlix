@@ -1,5 +1,6 @@
 package br.com.aluraFlix.categorias;
 
+import br.com.aluraFlix.domain.Videos;
 import br.com.aluraFlix.exception.CategoriaException;
 import br.com.aluraFlix.videos.VideosView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,17 +28,17 @@ public class CategoriasController {
         return ResponseEntity.ok(categoriasService.todasCategorias());
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<CategoriasView> mostrarporID(@PathVariable Long id) throws CategoriaException {
         return ResponseEntity.ok(categoriasService.mostrarCategoriaId(id));
     }
 
-    @GetMapping("{id}/videos")
+    @GetMapping("/{id}/videos")
     public ResponseEntity<List<VideosView>> mostrarVideosPorCategoria(@PathVariable Long id){
         return ResponseEntity.ok(categoriasService.mostrarVideosPorCategoria(id));
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<String> atualizarCategoria(@PathVariable Long id,  @Valid @RequestBody CategoriasForm categoriasForm) throws CategoriaException{
         return ResponseEntity.ok(categoriasService.atualizar(id, categoriasForm));
     }
