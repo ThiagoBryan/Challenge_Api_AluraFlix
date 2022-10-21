@@ -1,11 +1,12 @@
 package br.com.aluraFlix.videos;
 
 import br.com.aluraFlix.domain.Categorias;
-import br.com.aluraFlix.domain.Videos;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
+@NoArgsConstructor
 public class VideosForm {
 
     @NotBlank

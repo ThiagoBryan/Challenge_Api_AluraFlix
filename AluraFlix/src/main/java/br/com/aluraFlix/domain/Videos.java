@@ -2,6 +2,7 @@ package br.com.aluraFlix.domain;
 
 import br.com.aluraFlix.videos.VideosForm;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
