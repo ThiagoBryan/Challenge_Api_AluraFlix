@@ -75,7 +75,4 @@ public class Categorias {
         categoria.setCor(categoriasForm.getCor());
         return categoria;
     }
-
-
-
 }

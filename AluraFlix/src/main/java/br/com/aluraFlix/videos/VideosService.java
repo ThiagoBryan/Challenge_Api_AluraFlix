@@ -1,15 +1,20 @@
 package br.com.aluraFlix.videos;
 
+import br.com.aluraFlix.domain.Categorias;
 import br.com.aluraFlix.domain.Videos;
 import br.com.aluraFlix.exception.VideosException;
 import br.com.aluraFlix.mapper.MapperVideos;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class VideosService {
@@ -28,10 +33,21 @@ public class VideosService {
         videosRepository.save(mapper.converterVideos(videosForm));
         return "Video salvo com sucesso.";
     }
+        // TODOS OS VIDEOS SEM PAGINAÇÃO
+//    public List<VideosView> todosVideos() {
+//        return videosRepository.findAllVideos();
+//    }
+            //PAGINAÇÃO
+    public Page<VideosView> todosVideos(Pageable pageable) {
+        Page<Videos> videos = videosRepository.findAll(pageable);
+        List<VideosView> videosView = videos.getContent()
+                .stream()
+                .map(v -> mapper.converterVideos(v))
+                .collect(Collectors.toList());
 
-    public List<VideosView> todosVideos() {
-        return videosRepository.findAllVideos();
+        return new PageImpl<VideosView>(videosView, pageable, videos.getTotalElements());
     }
+
 
     public VideosView mostrarVideoId(Long videoId) {
         Videos video = videosRepository.findById(videoId).orElseThrow(() -> new VideosException("Video não encontrado"));
@@ -54,5 +70,6 @@ public class VideosService {
         videosRepository.deleteById(videoId);
 
     }
+
 
 }
