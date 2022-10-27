@@ -3,11 +3,11 @@ package br.com.aluraFlix.controllerTest;
 
 import br.com.aluraFlix.categorias.CategoriasRepository;
 import br.com.aluraFlix.domain.Categorias;
+import br.com.aluraFlix.domain.Videos;
 import br.com.aluraFlix.videos.VideosForm;
 import br.com.aluraFlix.videos.VideosRepository;
 import br.com.aluraFlix.videos.VideosService;
 import br.com.aluraFlix.videos.VideosView;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -44,6 +44,7 @@ public class VideoControllerTest {
 
     static String VIDEOS = "/videos";
     static String GET_TODOS_VIDEOS = "/videos/todos";
+    static String GET_VIDEOS_TITULO = "/videos/?titulo";
 
     @MockBean
     VideosService videosService;
@@ -51,7 +52,7 @@ public class VideoControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
+    @MockBean
     VideosRepository videosRepository;
 
     @Autowired
@@ -134,12 +135,6 @@ public class VideoControllerTest {
                 .get(VIDEOS.concat("/" + 1))
                 .accept(MediaType.APPLICATION_JSON);
 
-//        MvcResult mvcResult = mockMvc.perform(request)
-//                .andExpect(status().isOk())
-//                .andReturn();
-//
-//        Assertions.assertEquals(videosView, mvcResult.getResponse().getContentAsString());
-
         mockMvc
                 .perform(request)
                 .andExpect(status().isOk())
@@ -152,13 +147,42 @@ public class VideoControllerTest {
     }
 
 
+    @Test
+    @DisplayName("GET /videoTitulo")
+    public void deveriaRetornarVideoPorTitulo() throws Exception {
+
+        VideosView videosView = retonarVideo();
+
+        String titulo = "teste";
+        BDDMockito.given(videosService.mostrarVideoPorTitulo(titulo))
+                .willReturn(Optional.of(videosView));
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .get(GET_VIDEOS_TITULO.concat("=" + titulo))
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("id").value(1l))
+                .andExpect(jsonPath("titulo").value(videosView.getTitulo()))
+                .andExpect(jsonPath("descricao").value(videosView.getDescricao()))
+                .andExpect(jsonPath("url").value(videosView.getUrl()))
+                .andExpect(jsonPath("categoria.id").value(videosView.getCategoria().getId()))
+                .andExpect(jsonPath("categoria.titulo").value(videosView.getCategoria().getTitulo()))
+                .andExpect(jsonPath("categoria.cor").value(videosView.getCategoria().getCor()));
+
+    }
+
+
 
 
     private VideosForm criarVideo() {
+        Categorias categoria = new Categorias("teste", "teste");
+        categoria.setId(1L);
         return new VideosForm("teste",
                 "teste",
                 "teste",
-                new Categorias("teste", "teste"));
+                categoria);
     }
 
     private VideosView retonarVideo() {
