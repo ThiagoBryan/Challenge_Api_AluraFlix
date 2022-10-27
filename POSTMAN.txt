@@ -1,2 +1,2 @@
 para mudar quantos vem por pagina e por qual atributo
-page=0&size=10&sort=descricao
+?page=0&size=10&sort=descricao

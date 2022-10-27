@@ -22,7 +22,7 @@ public class CategoriasService {
     @Autowired
     private MapperCategorias mapperCategorias;
 
-    public String salvarCategoria(CategoriasForm categoriasForm){
+    public String salvarCategoria(CategoriasForm categoriasForm) {
         categoriasRepository.findByTitulo(categoriasForm.getTitulo()).ifPresent(categorias -> {
             throw new CategoriaException("Categoria já existe");
         });
@@ -41,7 +41,7 @@ public class CategoriasService {
 //    }
 
     //COM PAGINAÇÃO
-    public Page<CategoriasView> todasCategorias(Pageable pageable){
+    public Page<CategoriasView> todasCategorias(Pageable pageable) {
         Page<Categorias> categorias = categoriasRepository.findAll(pageable);
         List<CategoriasView> categoriasView = categorias.getContent()
                 .stream()
@@ -51,18 +51,18 @@ public class CategoriasService {
         return new PageImpl<CategoriasView>(categoriasView, pageable, categorias.getTotalElements());
     }
 
-    public CategoriasView mostrarCategoriaId(Long categoriaID){
-       Categorias categoria = categoriasRepository.findById(categoriaID).orElseThrow(()-> new CategoriaException("Categoria não encontrada"));
+    public CategoriasView mostrarCategoriaId(Long categoriaID) {
+        Categorias categoria = categoriasRepository.findById(categoriaID).orElseThrow(() -> new CategoriaException("Categoria não encontrada"));
         return mapperCategorias.converterCategorias(categoria);
     }
 
-    public List<VideosView> mostrarVideosPorCategoria(Long id){
+    public List<VideosView> mostrarVideosPorCategoria(Long id) {
         return categoriasRepository.findVideosByCategoriaId(id);
     }
 
-    public String atualizar(Long categoriaId, CategoriasForm categoriasForm){
+    public String atualizar(Long categoriaId, CategoriasForm categoriasForm) {
         Categorias categoria = categoriasRepository.findById(categoriaId).orElseThrow(() -> new CategoriaException("Categoria não encontarda"));
-        categoriasRepository.save(categoria.atualizarCategoria(categoria,categoriasForm));
+        categoriasRepository.save(categoria.atualizarCategoria(categoria, categoriasForm));
 
         return "A categoria com ID " + categoria.getId() + " foi atualizada";
     }
@@ -70,7 +70,6 @@ public class CategoriasService {
     public void deletar(Long categoriaID) {
         categoriasRepository.deleteById(categoriaID);
     }
-
 
 
 }

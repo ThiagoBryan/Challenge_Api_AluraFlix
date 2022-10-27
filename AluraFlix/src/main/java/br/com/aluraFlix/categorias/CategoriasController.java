@@ -25,7 +25,7 @@ public class CategoriasController {
     public ResponseEntity<String> salvar(@RequestBody @Valid CategoriasForm categoriasForm) throws CategoriaException {
         return new ResponseEntity<String>(categoriasService.salvarCategoria(categoriasForm), HttpStatus.CREATED);
     }
-        //SEM PAGINAÇÃO
+    //SEM PAGINAÇÃO
 //    @GetMapping
 //    public ResponseEntity<List<CategoriasView>> listasTodas() {
 //        return ResponseEntity.ok(categoriasService.todasCategorias());
@@ -33,7 +33,7 @@ public class CategoriasController {
 
     //COM PAGINAÇÃO
     @GetMapping
-    public ResponseEntity<Page<CategoriasView>> listaTodas(@PageableDefault(page = 0, size = 5, sort ="titulo") Pageable pageable) {
+    public ResponseEntity<Page<CategoriasView>> listaTodas(@PageableDefault(page = 0, size = 5, sort = "titulo") Pageable pageable) {
         return ResponseEntity.ok(categoriasService.todasCategorias(pageable));
     }
 
@@ -43,17 +43,17 @@ public class CategoriasController {
     }
 
     @GetMapping("/{id}/videos")
-    public ResponseEntity<List<VideosView>> mostrarVideosPorCategoria(@PathVariable Long id){
+    public ResponseEntity<List<VideosView>> mostrarVideosPorCategoria(@PathVariable Long id) {
         return ResponseEntity.ok(categoriasService.mostrarVideosPorCategoria(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> atualizarCategoria(@PathVariable Long id,  @Valid @RequestBody CategoriasForm categoriasForm) throws CategoriaException{
+    public ResponseEntity<String> atualizarCategoria(@PathVariable Long id, @Valid @RequestBody CategoriasForm categoriasForm) throws CategoriaException {
         return ResponseEntity.ok(categoriasService.atualizar(id, categoriasForm));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Long id){
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
         categoriasService.deletar(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
