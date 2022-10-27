@@ -173,6 +173,57 @@ public class VideoControllerTest {
 
     }
 
+    //    @Test
+//    @DisplayName("PUT /atualizarVideo")
+//    public void deveriaAtualizarVideo() throws Exception {
+//
+//        VideosForm videosForm = criarVideo();
+//
+//        Categorias categoria = new Categorias();
+//        categoria.setId(1L);
+//        categoria.setTitulo("teste");
+//        categoria.setCor("teste");
+//
+//        Videos video = new Videos("teste","teste","teste", categoria);
+//        video.setId(1L);
+//
+//
+//        Mockito.when(videosRepository.findById(1L)).thenReturn(Optional.of(video));
+//        BDDMockito.given(videosService.atualizar(1L,videosForm))
+//                .willReturn("O Vídeo com ID " + 1 + " foi atualizado");
+//
+//        String json = new ObjectMapper().writeValueAsString(videosForm);
+//        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+//                .put(VIDEOS.concat("/" + 1))
+//                .content(json)
+//                .accept(MediaType.APPLICATION_JSON)
+//                .contentType(MediaType.APPLICATION_JSON);
+//
+//        MvcResult mvcResult = mockMvc
+//                .perform(request)
+//                .andExpect(status().isOk()).andReturn();
+//        Assertions.assertEquals("O Vídeo com ID " + 1 + " foi atualizado", mvcResult.getResponse().getContentAsString());
+//    }
+
+
+
+    @Test
+    @DisplayName("DELETE /DeleteVideo")
+    public void deveriaDeletarVideo() throws Exception {
+
+        VideosView videosView = retonarVideo();
+
+        BDDMockito.given(videosService.mostrarVideoId(anyLong()))
+                .willReturn(videosView);
+
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .delete(VIDEOS.concat("/" + 1L))
+                .accept(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isAccepted());
+    }
+
 
 
 
