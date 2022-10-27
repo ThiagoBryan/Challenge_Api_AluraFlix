@@ -1,15 +1,17 @@
 package br.com.aluraFlix.categorias;
 
 import br.com.aluraFlix.domain.Categorias;
-import br.com.aluraFlix.domain.Videos;
 import br.com.aluraFlix.exception.CategoriaException;
 import br.com.aluraFlix.mapper.MapperCategorias;
 import br.com.aluraFlix.videos.VideosView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoriasService {
@@ -28,13 +30,25 @@ public class CategoriasService {
         return "Categoria salva com sucesso";
     }
 
-    public List<CategoriasView> todasCategorias(){
-        List<Categorias> categorias = categoriasRepository.findAll();
-        List<CategoriasView> categoriasView = new ArrayList<>();
-        categorias.forEach(categoria -> {
-            categoriasView.add(mapperCategorias.converterCategorias(categoria));
-        });
-        return categoriasView;
+    //SEM PAGINAÇÃO
+//    public List<CategoriasView> todasCategorias(){
+//        List<Categorias> categorias = categoriasRepository.findAll();
+//        List<CategoriasView> categoriasView = new ArrayList<>();
+//        categorias.forEach(categoria -> {
+//            categoriasView.add(mapperCategorias.converterCategorias(categoria));
+//        });
+//        return categoriasView;
+//    }
+
+    //COM PAGINAÇÃO
+    public Page<CategoriasView> todasCategorias(Pageable pageable){
+        Page<Categorias> categorias = categoriasRepository.findAll(pageable);
+        List<CategoriasView> categoriasView = categorias.getContent()
+                .stream()
+                .map(c -> mapperCategorias.converterCategorias(c))
+                .collect(Collectors.toList());
+
+        return new PageImpl<CategoriasView>(categoriasView, pageable, categorias.getTotalElements());
     }
 
     public CategoriasView mostrarCategoriaId(Long categoriaID){

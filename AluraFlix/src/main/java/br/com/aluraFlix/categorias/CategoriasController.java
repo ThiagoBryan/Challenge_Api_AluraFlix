@@ -4,6 +4,9 @@ import br.com.aluraFlix.domain.Videos;
 import br.com.aluraFlix.exception.CategoriaException;
 import br.com.aluraFlix.videos.VideosView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,10 +25,16 @@ public class CategoriasController {
     public ResponseEntity<String> salvar(@RequestBody @Valid CategoriasForm categoriasForm) throws CategoriaException {
         return new ResponseEntity<String>(categoriasService.salvarCategoria(categoriasForm), HttpStatus.CREATED);
     }
+        //SEM PAGINAÇÃO
+//    @GetMapping
+//    public ResponseEntity<List<CategoriasView>> listasTodas() {
+//        return ResponseEntity.ok(categoriasService.todasCategorias());
+//    }
 
+    //COM PAGINAÇÃO
     @GetMapping
-    public ResponseEntity<List<CategoriasView>> listasTodas() {
-        return ResponseEntity.ok(categoriasService.todasCategorias());
+    public ResponseEntity<Page<CategoriasView>> listaTodas(@PageableDefault(page = 0, size = 5, sort ="titulo") Pageable pageable) {
+        return ResponseEntity.ok(categoriasService.todasCategorias(pageable));
     }
 
     @GetMapping("/{id}")
