@@ -22,6 +22,7 @@ public class CategoriasService {
     @Autowired
     private MapperCategorias mapperCategorias;
 
+    
     public String salvarCategoria(CategoriasForm categoriasForm) {
         categoriasRepository.findByTitulo(categoriasForm.getTitulo()).ifPresent(categorias -> {
             throw new CategoriaException("Categoria já existe");
