@@ -53,14 +53,15 @@ public class VideosController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> atualizar(@PathVariable Long id, @Valid @RequestBody VideosForm videosForm) {
-        return ResponseEntity.ok(videosService.atualizar(id, videosForm));
+    public ResponseEntity<VideosForm> atualizar(@PathVariable Long id, @Valid @RequestBody VideosForm videosForm) {
+         videosService.atualizar(id, videosForm);
+        return ResponseEntity.ok(new VideosForm(videosForm.getTitulo(), videosForm.getDescricao(), videosForm.getUrl(), videosForm.getCategoria()));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         videosService.deletar(id);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return ResponseEntity.ok().build();
     }
 
 

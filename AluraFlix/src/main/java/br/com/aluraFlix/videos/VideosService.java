@@ -58,16 +58,15 @@ public class VideosService {
         return videosRepository.findByTitulo(titulo);
     }
 
-    public String atualizar(Long IdVideos, VideosForm videosForm) {
+    public void atualizar(Long IdVideos, VideosForm videosForm) {
         Videos video = videosRepository.findById(IdVideos).orElseThrow(() -> new VideosException("Video com ID informado não existe"));
         videosRepository.save(video.atualizarVideo(video, videosForm));
-
-        return "O Vídeo com ID " + video.getId() + " foi atualizado";
 
     }
 
     public void deletar(Long videoId) {
-        videosRepository.deleteById(videoId);
+        Optional<Videos> video = videosRepository.findById(videoId);
+        videosRepository.delete(video.get());
 
     }
 
