@@ -2,6 +2,7 @@ package br.com.aluraFlix.videos;
 
 import br.com.aluraFlix.domain.Categorias;
 import br.com.aluraFlix.domain.Videos;
+import br.com.aluraFlix.exception.DeleteException;
 import br.com.aluraFlix.exception.VideosException;
 import br.com.aluraFlix.exception.VideosTituloException;
 import br.com.aluraFlix.mapper.MapperVideos;
@@ -33,10 +34,6 @@ public class VideosService {
         videosRepository.save(entity);
         return entity;
     }
-        // TODOS OS VIDEOS SEM PAGINAÇÃO
-//    public List<VideosView> todosVideos() {
-//        return videosRepository.findAllVideos();
-//    }
             //PAGINAÇÃO
     public Page<VideosView> todosVideos(Pageable pageable) {
         Page<Videos> videos = videosRepository.findAll(pageable);
@@ -54,8 +51,8 @@ public class VideosService {
         return mapper.converterVideos(video);
     }
 
-    public Optional<VideosView> mostrarVideoPorTitulo(String titulo) {
-        return videosRepository.findByTitulo(titulo);
+    public VideosView mostrarVideoPorTitulo(String titulo) {
+        return videosRepository.findByTitulo(titulo).orElseThrow(() -> new VideosTituloException("Video com o Titulo informado não existe"));
     }
 
     public void atualizar(Long IdVideos, VideosForm videosForm) {
@@ -64,11 +61,10 @@ public class VideosService {
 
     }
 
-    public void deletar(Long videoId) {
-        Optional<Videos> video = videosRepository.findById(videoId);
-        videosRepository.delete(video.get());
-
+    public String deletar(Long videoId) {
+        Videos video = videosRepository.findById(videoId).orElseThrow(() -> new DeleteException("Video com ID informado não existe"));
+        videosRepository.delete(video);
+        return "Video Excluído com sucesso";
     }
-
 
 }

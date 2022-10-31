@@ -33,16 +33,6 @@ public class CategoriasService {
         return "Categoria salva com sucesso";
     }
 
-    //SEM PAGINAÇÃO
-//    public List<CategoriasView> todasCategorias(){
-//        List<Categorias> categorias = categoriasRepository.findAll();
-//        List<CategoriasView> categoriasView = new ArrayList<>();
-//        categorias.forEach(categoria -> {
-//            categoriasView.add(mapperCategorias.converterCategorias(categoria));
-//        });
-//        return categoriasView;
-//    }
-
     //COM PAGINAÇÃO
     public Page<CategoriasView> todasCategorias(Pageable pageable) {
         Page<Categorias> categorias = categoriasRepository.findAll(pageable);
