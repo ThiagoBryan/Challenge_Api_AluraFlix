@@ -17,7 +17,6 @@ public class VideosForm {
     private String descricao;
     @NotBlank
     private String url;
-    @NotNull
     private Categorias categoria;
 
     public Categorias getCategoria() {

@@ -38,7 +38,7 @@ public class CategoriasController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategoriasView> mostrarporID(@PathVariable Long id) throws CategoriaException {
+    public ResponseEntity<CategoriasView> mostrarporId(@PathVariable Long id) {
         return ResponseEntity.ok(categoriasService.mostrarCategoriaId(id));
     }
 

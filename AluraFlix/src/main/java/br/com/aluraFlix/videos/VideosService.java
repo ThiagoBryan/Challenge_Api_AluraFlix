@@ -29,7 +29,6 @@ public class VideosService {
             throw new VideosException("Video já existe");
         });
 
-        //Videos videos = new Videos();
         videosRepository.save(mapper.converterVideos(videosForm));
         return "Video salvo com sucesso.";
     }
@@ -50,7 +49,7 @@ public class VideosService {
 
 
     public VideosView mostrarVideoId(Long videoId) {
-        Videos video = videosRepository.findById(videoId).orElseThrow(() -> new VideosException("Video não encontrado"));
+        Videos video = videosRepository.findById(videoId).orElseThrow(() -> new VideosException("Video com ID informado não existe"));
         return mapper.converterVideos(video);
     }
 
@@ -59,7 +58,7 @@ public class VideosService {
     }
 
     public String atualizar(Long IdVideos, VideosForm videosForm) {
-        Videos video = videosRepository.findById(IdVideos).orElseThrow(() -> new VideosException("Video não encontrado"));
+        Videos video = videosRepository.findById(IdVideos).orElseThrow(() -> new VideosException("Video com ID informado não existe"));
         videosRepository.save(video.atualizarVideo(video, videosForm));
 
         return "O Vídeo com ID " + video.getId() + " foi atualizado";
