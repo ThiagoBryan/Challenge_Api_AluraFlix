@@ -3,6 +3,7 @@ package br.com.aluraFlix.videos;
 import br.com.aluraFlix.domain.Categorias;
 import br.com.aluraFlix.domain.Videos;
 import br.com.aluraFlix.exception.VideosException;
+import br.com.aluraFlix.exception.VideosTituloException;
 import br.com.aluraFlix.mapper.MapperVideos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -53,7 +54,7 @@ public class VideosService {
         return mapper.converterVideos(video);
     }
 
-    public Optional<VideosView> mostrarVideoPorTitulo(String titulo){
+    public Optional<VideosView> mostrarVideoPorTitulo(String titulo) {
         return videosRepository.findByTitulo(titulo);
     }
 

@@ -1,5 +1,6 @@
 package br.com.aluraFlix.videos;
 
+import br.com.aluraFlix.exception.VideosTituloException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
@@ -43,8 +44,8 @@ public class VideosController {
     }
 
     @GetMapping
-    public ResponseEntity<VideosView> mostrarVideoPorTitulo(@RequestParam("titulo") String titulo) {
-        return ResponseEntity.ok(videosService.mostrarVideoPorTitulo(titulo).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
+    public ResponseEntity<VideosView> mostrarVideoPorTitulo(@RequestParam("titulo") String titulo)  {
+        return ResponseEntity.ok(videosService.mostrarVideoPorTitulo(titulo).orElseThrow(() -> new VideosTituloException("Video com o Titulo informado não existe")));
     }
 
     @PutMapping("/{id}")
