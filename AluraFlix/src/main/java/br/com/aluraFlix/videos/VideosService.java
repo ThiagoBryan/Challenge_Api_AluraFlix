@@ -25,13 +25,13 @@ public class VideosService {
     @Autowired
     private MapperVideos mapper;
 
-    public String salvarVideo(VideosForm videosForm) {
+    public Videos salvarVideo(VideosForm videosForm) {
         videosRepository.findByUrl(videosForm.getUrl()).ifPresent(videos -> {
             throw new VideosException("Video já existe");
         });
-
-        videosRepository.save(mapper.converterVideos(videosForm));
-        return "Video salvo com sucesso.";
+        Videos entity = mapper.converterVideos(videosForm);
+        videosRepository.save(entity);
+        return entity;
     }
         // TODOS OS VIDEOS SEM PAGINAÇÃO
 //    public List<VideosView> todosVideos() {

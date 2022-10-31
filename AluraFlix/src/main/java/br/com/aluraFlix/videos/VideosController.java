@@ -1,5 +1,6 @@
 package br.com.aluraFlix.videos;
 
+import br.com.aluraFlix.domain.Videos;
 import br.com.aluraFlix.exception.VideosTituloException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -22,8 +24,10 @@ public class VideosController {
     private VideosService videosService;
 
     @PostMapping
-    public ResponseEntity<String> save(@RequestBody VideosForm videosForm) {
-        return new ResponseEntity<String>(videosService.salvarVideo(videosForm), HttpStatus.CREATED);
+    public ResponseEntity<VideosView> save(@RequestBody VideosForm videosForm) {
+        Videos videos = videosService.salvarVideo(videosForm);
+        URI uri = URI.create("/todos");
+        return ResponseEntity.created(uri).body(new VideosView(videos.getId(),videosForm.getTitulo(), videosForm.getDescricao(), videosForm.getUrl(), videosForm.getCategoria()));
     }
 
     //BUSCAR TODOS SEM PAGINAÇÃO

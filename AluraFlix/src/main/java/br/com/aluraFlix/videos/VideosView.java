@@ -27,7 +27,4 @@ public class VideosView {
         this.categoria = video.getCategoria();
     }
 
-    public VideosView(Videos videoView, Long idVideo) {
-
-    }
 }

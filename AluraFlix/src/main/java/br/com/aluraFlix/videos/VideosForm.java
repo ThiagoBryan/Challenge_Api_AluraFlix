@@ -23,10 +23,6 @@ public class VideosForm {
         return categoria;
     }
 
-    public void setCategoria(Categorias categoria) {
-        this.categoria = categoria;
-    }
-
     public String getTitulo() {
         return titulo;
     }
@@ -39,16 +35,8 @@ public class VideosForm {
         return descricao;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
     public String getUrl() {
         return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
 }
