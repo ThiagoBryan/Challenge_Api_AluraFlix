@@ -25,11 +25,6 @@ public class CategoriasController {
     public ResponseEntity<String> salvar(@RequestBody @Valid CategoriasForm categoriasForm) throws CategoriaException {
         return new ResponseEntity<String>(categoriasService.salvarCategoria(categoriasForm), HttpStatus.CREATED);
     }
-    //SEM PAGINAÇÃO
-//    @GetMapping
-//    public ResponseEntity<List<CategoriasView>> listasTodas() {
-//        return ResponseEntity.ok(categoriasService.todasCategorias());
-//    }
 
     //COM PAGINAÇÃO
     @GetMapping
@@ -57,5 +52,6 @@ public class CategoriasController {
         categoriasService.deletar(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
+
 
 }

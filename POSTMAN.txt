@@ -1,2 +1,91 @@
 para mudar quantos vem por pagina e por qual atributo:
 ?page=0&size=10&sort=descricao
+
+// SALVAR COM RETORNO STRING
+@PostMapping
+    public ResponseEntity<String> save(@RequestBody VideosForm videosForm) {
+        return new ResponseEntity<String>(videosService.salvarVideo(videosForm), HttpStatus.CREATED);
+    }
+
+
+
+// ATUALIZAR COM RETORNO STRING
+
+  public String atualizar(Long IdVideos, VideosForm videosForm) {
+        Videos video = videosRepository.findById(IdVideos).orElseThrow(() -> new VideosException("Video com ID informado não existe"));
+        videosRepository.save(video.atualizarVideo(video, videosForm));
+
+        return "O Vídeo com ID " + video.getId() + " foi atualizado";
+
+    }
+
+
+
+   //BUSCAR TODOS SEM PAGINAÇÃO
+//    @GetMapping("/todos")
+//    public ResponseEntity<List<VideosView>> listarTodos() {
+//        return ResponseEntity.ok(videosService.todosVideos());
+//    }
+
+
+
+       // TODOS OS VIDEOS SEM PAGINAÇÃO SERVICE
+//    public List<VideosView> todosVideos() {
+//        return videosRepository.findAllVideos();
+//    }
+
+
+    //SEM PAGINAÇÃO COM FOR EACH
+//    public List<CategoriasView> todasCategorias(){
+//        List<Categorias> categorias = categoriasRepository.findAll();
+//        List<CategoriasView> categoriasView = new ArrayList<>();
+//        categorias.forEach(categoria -> {
+//            categoriasView.add(mapperCategorias.converterCategorias(categoria));
+//        });
+//        return categoriasView;
+//    }
+
+
+	//DELETE
+public void deletar(Long videoId) {
+        videosRepository.deleteById(videoId);
+    }
+
+	//DELETE
+ @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        videosService.deletar(id);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+}
+
+          				//TESTES
+
+	// TESTE SALVAR COM STRING
+
+@Test
+    @DisplayName("POST /videoSalvo")
+    public void deveriaSalvarVideo() throws Exception {
+        // Cenario
+        BDDMockito.given(videosService.salvarVideo(Mockito.any(VideosForm.class)))
+                .willReturn("Video salvo com sucesso.");
+        VideosForm videosForm = criarVideo();
+
+        String json = new ObjectMapper().writeValueAsString(videosForm);
+
+        // Simulando o corpo para requisicao post
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .post(VIDEOS)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(json);
+
+        // Simulando chamada
+        MvcResult mvcResult = mockMvc.perform(request)
+                .andExpect(status().isCreated())
+                .andReturn();
+
+        // Retorno esperado
+        Assertions.assertEquals("Video salvo com sucesso.", mvcResult.getResponse().getContentAsString());
+
+    }
+

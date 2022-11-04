@@ -27,18 +27,12 @@ public class VideosController {
     public ResponseEntity<VideosView> save(@RequestBody VideosForm videosForm) {
         Videos videos = videosService.salvarVideo(videosForm);
         URI uri = URI.create("/todos");
-        return ResponseEntity.created(uri).body(new VideosView(videos.getId(),videosForm.getTitulo(), videosForm.getDescricao(), videosForm.getUrl(), videosForm.getCategoria()));
+        return ResponseEntity.created(uri).body(new VideosView(videos.getId(), videosForm.getTitulo(), videosForm.getDescricao(), videosForm.getUrl(), videosForm.getCategoria()));
     }
 
-    //BUSCAR TODOS SEM PAGINAÇÃO
-//    @GetMapping("/todos")
-//    public ResponseEntity<List<VideosView>> listarTodos() {
-//        return ResponseEntity.ok(videosService.todosVideos());
-//    }
-
-        //PAGINAÇÃO
+    //PAGINAÇÃO
     @GetMapping("/todos")
-    public ResponseEntity<Page<VideosView>> listarTodos(@PageableDefault(page = 0, size = 5, sort ="titulo") Pageable pageable) {
+    public ResponseEntity<Page<VideosView>> listarTodos(@PageableDefault(page = 0, size = 5, sort = "titulo") Pageable pageable) {
         return ResponseEntity.ok(videosService.todosVideos(pageable));
     }
 
@@ -48,21 +42,19 @@ public class VideosController {
     }
 
     @GetMapping
-    public ResponseEntity<VideosView> mostrarVideoPorTitulo(@RequestParam("titulo") String titulo)  {
-        return ResponseEntity.ok(videosService.mostrarVideoPorTitulo(titulo).orElseThrow(() -> new VideosTituloException("Video com o Titulo informado não existe")));
+    public ResponseEntity<VideosView> mostrarVideoPorTitulo(@RequestParam("titulo") String titulo) {
+        return ResponseEntity.ok(videosService.mostrarVideoPorTitulo(titulo));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<VideosForm> atualizar(@PathVariable Long id, @Valid @RequestBody VideosForm videosForm) {
-         videosService.atualizar(id, videosForm);
+        videosService.atualizar(id, videosForm);
         return ResponseEntity.ok(new VideosForm(videosForm.getTitulo(), videosForm.getDescricao(), videosForm.getUrl(), videosForm.getCategoria()));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Long id) {
-        videosService.deletar(id);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<String> deletar(@PathVariable Long id) {
+        return ResponseEntity.ok(videosService.deletar(id));
     }
-
 
 }
